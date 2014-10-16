@@ -1,0 +1,10 @@
+ ##Sys.setenv(GITHUB_CONSUMER_SECRET = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+ myapp <- oauth_app("github","yyyyyyyyyyyyyyyy")
+ github_token <- oauth2.0_token(oauth_endpoints("github"), myapp)
+ library(httpuv)
+ gtoken <- config(token = github_token)
+ req <- GET("https://api.github.com/users/jtleek/repos", gtoken)
+ stop_for_status(req)
+ x <- content(req)
+ y <- sapply(x, function (a)  if (a$name == "datasharing") a$created_at else NA)
+ y[y != "NA"]
